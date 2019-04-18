@@ -66,10 +66,19 @@ class PostView(AdminMixin, ModelView):
             if current_user.has_role('editor'):
                 self.can_delete = False
                 self.can_edit = False
-                self.form_excluded_columns = ['is_draft']
+                self.form_widget_args = {
+                    'is_draft': {
+                        'disabled': True
+                    }
+                }
             else:
                 self.can_delete = True
                 self.can_edit = True
+                self.form_widget_args = {
+                    'is_draft': {
+                        'disabled': False
+                    }
+                }
         else:
             return redirect(url_for('security.login', next=request.url))
 
