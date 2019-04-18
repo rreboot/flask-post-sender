@@ -19,4 +19,4 @@ class Config(object):
     CKEDITOR_FILE_UPLOADER = 'main.upload'
     UPLOADED_PATH = op.join(basedir, 'uploads')
     CKEDITOR_LANGUAGE = 'ru'
-    CKEDITOR_ALLOWED_EXTENSIONS = ['filebrowser']
+    # CKEDITOR_FILE_BROWSER = 'main.browse'  # TODO: realize file browser

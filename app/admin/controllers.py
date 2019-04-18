@@ -56,9 +56,22 @@ class PostView(AdminMixin, ModelView):
                     'description',
                     'pub_date',
                     'published',
+                    'is_draft',
                     'file',
                     'tags',
                     'attachments']
+
+    def _handle_view(self, name, **kwargs):
+        if self.is_accessible():
+            if current_user.has_role('editor'):
+                self.can_delete = False
+                self.can_edit = False
+                self.form_excluded_columns = ['is_draft']
+            else:
+                self.can_delete = True
+                self.can_edit = True
+        else:
+            return redirect(url_for('security.login', next=request.url))
 
     form_overrides = {
         'description': CKEditorField,
@@ -78,12 +91,11 @@ class PostView(AdminMixin, ModelView):
             if path not in path_list:
                 db.session.add(Attachment(path=path, post_id=model.id))
         for link in model.get_imgurls():
-            print(link)
             if link not in path_list:
                 db.session.add(Attachment(path=link, post_id=model.id))
         path_list = [x.path for x in Attachment.query.filter_by(post_id=model.id)]
 
-        if model.published is False:
+        if not model.published and not model.is_draft:
             wp = PostWall(GROUP_ID, ACCESS_TOKEN, API_VERSION)
             pub_time = None
             if model.pub_date is not None:

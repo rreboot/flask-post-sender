@@ -18,6 +18,7 @@ class Post(db.Model):
     created = db.Column(db.DateTime, default=datetime.now())
     pub_date = db.Column(db.DateTime, nullable=True, default=datetime.now())
     published = db.Column(db.Boolean, default=False)
+    is_draft = db.Column(db.Boolean, default=True)
     tags = db.relationship('Tag',
                            secondary=post_tags,
                            backref=db.backref('posts', lazy='dynamic'))

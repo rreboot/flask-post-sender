@@ -1,3 +1,4 @@
+import os
 from app.main import bp
 from flask import render_template, url_for, request
 from flask import send_from_directory
@@ -46,5 +47,14 @@ def upload():
     unique_filename = secure_filename(f.filename.split('.')[0].lower())
     f.filename = unique_filename + '.' + extension
     f.save(op.join(uploads, f.filename))
-    url = url_for('uploaded_files', filename=f.filename)
+    url = url_for('main.uploaded_files', filename=f.filename)
     return upload_success(url=url)
+
+
+@bp.route('/browse')
+def browse():
+    files = []
+    for r, d, f in os.walk(uploads):
+        for file in f:
+            files.append(os.path.join(r, file))
+    return render_template('browse.html', files=files)

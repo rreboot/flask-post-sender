@@ -3,8 +3,11 @@ from flask_ckeditor import CKEditor
 from .database import db
 from config import Config
 from flask_security import SQLAlchemyUserDatastore, Security
+from .admin.models import User, Role
+from .posts.models import Post, Tag, Attachment
 
 ckeditor = CKEditor()
+security = Security()
 
 
 def create_app():
@@ -25,8 +28,6 @@ def create_app():
     from app.admin.controllers import admin, PostView, TagView, AdminView
     admin.init_app(app)
 
-    from .admin.models import User, Role
-    from .posts.models import Post, Tag, Attachment
     admin.add_view(PostView(Post, db.session))
     admin.add_view(TagView(Tag, db.session))
     admin.add_view(AdminView(Attachment, db.session))
@@ -34,20 +35,6 @@ def create_app():
     admin.add_view(AdminView(Role, db.session))
 
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security = Security(app, user_datastore)
+    security.init_app(app, user_datastore)
 
     return app
-
-#
-# admin = Admin(app, index_view=HomeAdminView(), template_mode='bootstrap3')
-#
-#
-# # Add views
-# admin.add_view(PostView(Post, db.session))
-# admin.add_view(TagView(Tag, db.session))
-# admin.add_view(AdminView(Attachment, db.session))
-# admin.add_view(AdminView(User, db.session))
-# admin.add_view(AdminView(Role, db.session))
-#
-#
-# # Security
