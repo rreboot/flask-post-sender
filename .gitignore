@@ -1,0 +1,12 @@
+.idea/
+.idea/*
+
+venv/
+venv/*
+
+*.pyc
+
+app/token
+
+app/static/ckfinder
+app/static/ckeditor

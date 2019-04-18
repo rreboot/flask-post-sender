@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Main page
+{% endblock %}
+
+
+{% block content %}
+    <a href="{{ url_for('posts.index') }}" class="btn btn-primary btn-block" type="button">Posts</a>
+    <a href="{{ url_for('posts.tags_list') }}" class="btn btn-primary btn-block" type="button">Tags</a>
+    <a href="{{ url_for('main.atom_feed') }}" class="btn btn-primary btn-block" type="button">RSS feed</a>
+{% endblock %}
