@@ -6,7 +6,6 @@ API_VERSION = '5.92'
 ACCESS_TOKEN = open('app/token', 'r').read().strip()
 
 
-
 class PostWall:
     owner_id = None
     access_token = None

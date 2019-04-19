@@ -1,8 +1,9 @@
 from flask import Flask
-from flask_ckeditor import CKEditor
-from .database import db
-from config import Config
 from flask_security import SQLAlchemyUserDatastore, Security
+from flask_ckeditor import CKEditor
+
+from config import Config
+from .database import db
 from .admin.models import User, Role
 from .posts.models import Post, Tag, Attachment
 

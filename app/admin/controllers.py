@@ -1,17 +1,20 @@
-from flask_security import current_user
-from flask import redirect, request, url_for
-from flask_admin.contrib.sqla import ModelView
-from flask_admin import AdminIndexView
-from flask_ckeditor import CKEditorField
-from flask_admin import form
-from config import Config, op
 import os
 from datetime import datetime
+
+from flask import redirect, request, url_for
+from flask_admin import Admin
+from flask_admin import AdminIndexView
+from flask_admin import form
+from flask_admin.contrib.sqla import ModelView
+from flask_security import current_user
+from flask_ckeditor import CKEditorField
+
+from config import Config, op
 from app.posts.models import Attachment
 from app.database import db
+
 from app.vk_post import PostWall, GROUP_ID, API_VERSION, ACCESS_TOKEN  # TODO: replace this!
 
-from flask_admin import Admin
 
 uploads = Config.UPLOADED_PATH
 try:

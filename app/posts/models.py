@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
-from app.database import db
 
+from app.database import db
 from config import op, basedir
 
 post_tags = db.Table('post_tags',
